@@ -1,9 +1,11 @@
+require('dotenv').config()
+
 const Discord = require('discord.js');
 
 class Bot {
     constructor() {
         this.client = new Discord.Client();
-        this.bot_secret_token = "ODM3NjQ5ODk3MDgzNjMzNjY0.YIvoQg.-6YtJyVJJgO1nxx7GL5DIE7Zb_4"
+        this.bot_secret_token = process.env.BOT_SECRET_TOKEN;
         
         this.annoyOne;
         this.annoyTwo;
