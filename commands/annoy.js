@@ -1,6 +1,10 @@
 'use strict';
 
 exports.Run = async function Run(caller, message) {
+    if (caller.annoyOne == null || caller.annoyTwo == null) {
+        message.channel.send("Type !start to start using me");
+        return;
+    }
     let guild = message.guild;
     let targetUserId = message.content.split(" ")[1];
     let targetUser = guild.members.cache.find((user) => user.id == targetUserId);

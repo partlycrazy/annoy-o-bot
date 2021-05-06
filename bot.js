@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const Discord = require('discord.js');
 
@@ -9,11 +9,10 @@ class Bot {
         
         this.annoyOne;
         this.annoyTwo;
-//        this.targetUserId = 619601596849848340;
 
         this.client.on('ready', () => {
             console.log("Bot is Ready!")
-            this.client.user.setActivity("Ready!");
+            this.client.user.setActivity("Ready To Annoy!");
         });
 
         this.client.on('message', (message) => {
@@ -21,20 +20,23 @@ class Bot {
                 return;
             }
 
-            // console.log(`Message Received: ${message.content}`);
+            if (message.member.roles.cache.find((role) => role.name == "victim")) {
+                message.channel.send("You are not authorized to use me!");
+                return;
+            }
 
-            if (message.content.startsWith("!")) {
-                let command = message.content.substr(1);
-                command = command.split(" ")[0];
+            if (message.content.startsWith("!")) {                
                 try {
+                    let command = message.content.substr(1);
+                    command = command.split(" ")[0];
                     const Command = require(`./commands/${command}.js`);
                     Command.Run(this, message)
+                    delete require.cache[require.resolve(`./commands/${command}.js`)];
                 } catch (e) {
                     console.log(e);
                 } finally {
-                    delete require.cache[require.resolve(`./commands/${command}.js`)];
-                }
-                
+                    
+                }                
             }
         });
 
